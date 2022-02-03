@@ -1,5 +1,4 @@
 
-
 struct Node {                                      
    int id; // each listNode contains a character
    int score; 
@@ -98,33 +97,36 @@ int deletes( LLPtr *sPtr, int value )
    LLPtr tempPtr; // temporary node pointer
 
    // delete first node
-   if ( value == ( *sPtr )->id ) { 
+   if ( value == (*sPtr)->id ) { 
       tempPtr = *sPtr; // hold onto node being removed
-      *sPtr = ( *sPtr )->nextPtr; // de-thread the node
-      free( tempPtr ); // free the de-threaded node
+      *sPtr = (*sPtr)->nextPtr; // de-thread the node
+      free(tempPtr); // free the de-threaded node
+
       return value;
    } // end if
    else { 
       previousPtr = *sPtr;
-      currentPtr = ( *sPtr )->nextPtr;
+      currentPtr = (*sPtr)->nextPtr;
 
       // loop to find the correct location in the list
       while ( currentPtr != NULL && currentPtr->id != value ) { 
          previousPtr = currentPtr; // walk to ...  
          currentPtr = currentPtr->nextPtr; // ... next node  
       } // end while
-
       // delete node at currentPtr
       if ( currentPtr != NULL ) { 
          tempPtr = currentPtr;
          previousPtr->nextPtr = currentPtr->nextPtr;
-         free( tempPtr );
+         currentPtr->pPtr = previousPtr;
+         free(tempPtr);
+
          return value;
       } // end if
    } // end else
 
    return '\0';
 } // end function delete
+
 
 // return 1 if the list is empty, 0 otherwise
 int isEmpty( LLPtr sPtr )
@@ -168,8 +170,8 @@ void printReverse( LLPtr currentPtr )
       } // end while
 
       printf( "NULL" );
-      while ( currentPtr != tempPtr->pPtr ) { //print from end of list
-         printf( " --> {ID: %d, Score: %d} ", currentPtr->id, currentPtr->score);
+      while ( currentPtr != tempPtr->pPtr ) { 
+         printf( " --> {ID: %d, Score: %d}", currentPtr->id, currentPtr->score);
          currentPtr = currentPtr->pPtr; 
       } 
       puts("\n");

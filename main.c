@@ -29,13 +29,14 @@ int main( void )
          case 2: // delete an element
             // if list is not empty
             if ( !isEmpty( startPtr ) ) { 
-               printf( "%s", "Enter number to be deleted: " );
+               printf( "%s", "Enter ID that you want to deleted: " );
                scanf( "%d", &item_1 );
 
                // if character is found, remove it
                if ( deletes( &startPtr, item_1 ) == item_1) { // remove item
                   printf( "%d deleted.\n", item_1 );
                   printList( startPtr );
+                  printReverse(startPtr);
                } // end if
                else {
                   printf( "%d not found.\n\n", item_1 );
