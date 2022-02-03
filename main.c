@@ -24,7 +24,7 @@ int main( void )
             scanf( "%d", &item_2 );
             insert( &startPtr, item_1, item_2 ); // insert item in list
             printList( startPtr );
-            //printReverse(startPtr);
+            printReverse(startPtr);
             break;
          case 2: // delete an element
             // if list is not empty

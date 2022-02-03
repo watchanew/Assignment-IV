@@ -41,6 +41,7 @@ void insert( LLPtr *sPtr, int value, int data )
    LLPtr newPtr; // pointer to new node
    LLPtr previousPtr; // pointer to previous node in list
    LLPtr currentPtr; // pointer to current node in list
+   LLPtr lastPtr; // temporary node pointer
 
    newPtr =(LLPtr) malloc( sizeof( LLnode ) ); // create node
 
@@ -57,8 +58,9 @@ void insert( LLPtr *sPtr, int value, int data )
       while ( currentPtr != NULL && value > currentPtr->id ) {
          previousPtr = currentPtr; // walk to ...               
          currentPtr = currentPtr->nextPtr; // ... next node 
+  
       } // end while                                         
-
+      //tempPtr = currentPtr;
       // insert new node at beginning of list
       if ( previousPtr == NULL ) { 
         
@@ -68,7 +70,7 @@ void insert( LLPtr *sPtr, int value, int data )
          *sPtr = newPtr;
 
       } // end if
-      else { // insert new node between previousPtr and currentPtr
+      else if(currentPtr != NULL) { // insert new node between previousPtr and currentPtr
          previousPtr->nextPtr = newPtr;
          newPtr->pPtr=previousPtr;
 
@@ -76,6 +78,12 @@ void insert( LLPtr *sPtr, int value, int data )
          currentPtr->pPtr=newPtr;
 
       } // end else
+      else{
+         previousPtr->nextPtr = newPtr;
+         newPtr->pPtr=previousPtr;
+
+         newPtr->nextPtr = NULL;
+      }
    } // end if
    else {
       printf( "%d not inserted. No memory available.\n", value );
@@ -141,5 +149,29 @@ void printList( LLPtr currentPtr )
       } // end while
 
       puts( "NULL\n" );
+   } // end else
+} // end function printList
+
+void printReverse( LLPtr currentPtr )
+{ 
+  LLPtr tempPtr = currentPtr;
+   // if list is empty
+   if ( isEmpty( currentPtr ) ) {
+      puts( "List is empty.\n" );
+   } // end if
+   else { 
+      puts( "The list is:" );
+
+      // while not the end of the list
+      while ( currentPtr->nextPtr != NULL ) {
+         currentPtr = currentPtr->nextPtr;   
+      } // end while
+
+      printf( "NULL" );
+      while ( currentPtr != tempPtr->pPtr ) { //print from end of list
+         printf( " --> {ID: %d, Score: %d} ", currentPtr->id, currentPtr->score);
+         currentPtr = currentPtr->pPtr; 
+      } 
+      puts("\n");
    } // end else
 } // end function printList
