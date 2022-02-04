@@ -40,7 +40,6 @@ void insert( LLPtr *sPtr, int value, int data )
    LLPtr newPtr; // pointer to new node
    LLPtr previousPtr; // pointer to previous node in list
    LLPtr currentPtr; // pointer to current node in list
-   LLPtr lastPtr; // temporary node pointer
 
    newPtr =(LLPtr) malloc( sizeof( LLnode ) ); // create node
 
@@ -116,8 +115,8 @@ int deletes( LLPtr *sPtr, int value )
       // delete node at currentPtr
       if ( currentPtr != NULL ) { 
          tempPtr = currentPtr;
+         currentPtr->nextPtr->pPtr = previousPtr;
          previousPtr->nextPtr = currentPtr->nextPtr;
-         currentPtr->pPtr = previousPtr;
          free(tempPtr);
 
          return value;
@@ -162,7 +161,7 @@ void printReverse( LLPtr currentPtr )
       puts( "List is empty.\n" );
    } // end if
    else { 
-      puts( "The list is:" );
+      puts( "The backward list is:" );
 
       // while not the end of the list
       while ( currentPtr->nextPtr != NULL ) {
